@@ -1,0 +1,26 @@
+.container {
+    display:grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 80px);
+    background-color: black;
+    width: fit-content;
+    padding: 5px;
+}
+.display {
+    grid-column: 1/-1;
+}
+#equals, #zero {
+    grid-column: span 2;
+}
+.delete {
+    background-color: red;
+    color:white;
+}
+.operand {
+    background-color: rgb(159, 159, 159);
+    color:white;
+}
+.operator {
+    background-color: orange;
+    color:white;
+}
