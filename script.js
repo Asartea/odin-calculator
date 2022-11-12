@@ -2,6 +2,7 @@
 
 const DEFAULT_DISPLAY = ''
 const primaryDisplay = document.querySelector(".primary-display")
+const secondaryDisplay = document.querySelector(".secondary-display")
 const numbers = document.querySelectorAll("[data-type=number]")
 const operators = document.querySelectorAll("[data-type=operator]")
 const equals = document.querySelector("#equals")
@@ -58,7 +59,8 @@ function addOperation(operation) {
     }
     firstOperand = primaryDisplay.textContent
     currentOperation = operation
-    primaryDisplay.textContent = 0
+    primaryDisplay.textContent = ''
+    secondaryDisplay.textContent = `${firstOperand} ${currentOperation}`
 }
 
 /* Deletion functions */
@@ -69,7 +71,7 @@ function deleteLast() {
         .slice(0, -1)
 }
 function reset() {
-    primaryDisplay.textContent = 0
+    primaryDisplay.textContent = ''
     secondaryDisplay.textContent = ''
     firstOperand = ''
     secondOperand = ''
@@ -88,36 +90,35 @@ function round(num) {
 function evaluate() {
     if (currentOperation === null) {
         return
-    } else if (currentOperation === "/" && primaryDisplay.textContent === 0) {
+    } else if (currentOperation === "/" && primaryDisplay.textContent === '0') {
         console.error('Attempted division by 0')
         alert("You can't divide by zero")
         return
     }
     secondOperand = primaryDisplay.textContent
-    primaryDisplay.textContent = round(operate(currentOperation, firstOperand, secondOperand))
+    primaryDisplay.textContent = operate(currentOperation, firstOperand, secondOperand)
+    secondaryDisplay.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`
+    currentOperation = null
 }
 const operate = (operator, num1, num2) => {
     num1 = Number(num1)
     num2 = Number(num2)
     switch (operator) {
         case '+':
-            displayResult(add(num1, num2))
-            break;
+            return round(add(num1, num2))
+            break
         case '-':
-            displayResult(substract(num1, num2))
+            return round(substract(num1, num2))
             break;
         case 'x':
-            displayResult(multiply(num1, num2))
+            return round(multiply(num1, num2))
             break;
         case '/':
-            displayResult(divide(num1, num2))
+            return round(divide(num1, num2))
             break;
         default:
             console.error(`Operator not recognised. The current value of operand is: ${operator}`)
             break;
 
     }
-}
-function displayResult(result) {
-    console.log(result)
 }
