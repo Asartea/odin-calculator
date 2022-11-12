@@ -12,11 +12,10 @@
 #equals, #zero {
     grid-column: span 2;
 }
-.button-normal {
-    color:white;
-    background-color: rgb(159, 159, 159);
-}
 .button-red {
     background-color: red;
     color:white;
+}
+.primary-display, .secondary-display {
+    color:white
 }
