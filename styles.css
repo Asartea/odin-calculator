@@ -12,15 +12,11 @@
 #equals, #zero {
     grid-column: span 2;
 }
-.delete {
-    background-color: red;
+.button-normal {
     color:white;
-}
-.operand {
     background-color: rgb(159, 159, 159);
-    color:white;
 }
-.operator, .equals {
-    background-color: orange;
+.button-red {
+    background-color: red;
     color:white;
 }

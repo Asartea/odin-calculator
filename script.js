@@ -1,11 +1,104 @@
+// Constants //
+
 const DEFAULT_DISPLAY = ''
-let operands = [0,0]
-let operators = []
-const multiply = (num1, num2) => num1*num2
+const primaryDisplay = document.querySelector(".primary-display")
+const numbers = document.querySelectorAll("[data-type=number]")
+const operators = document.querySelectorAll("[data-type=operator]")
+const equals = document.querySelector("#equals")
+const point = document.querySelector('#point')
+const clear = document.querySelector("[data-type=clear]")
+const del = document.querySelector("[data-type=delete]")
+
+// Other declarations //
+let currentOperation = null
+let firstOperand = ''
+let secondOperand = ''
+// event listeners //
+
+equals.addEventListener('click', evaluate)
+del.addEventListener('click', deleteLast)
+clear.addEventListener('click', reset)
+point.addEventListener('click', addPoint)
+
+function setupNumbers() {
+    numbers.forEach(button => {
+        button.addEventListener('click', () => {
+            addNumber(button.textContent)
+        })
+    });
+}
+function setupOperators() {
+    operators.forEach(button => {
+        button.addEventListener('click', () => {
+            addOperation(button.textContent)
+        })
+    })
+}
+setupNumbers()
+setupOperators()
+/* Dom manipulation functions */
+
+function addNumber(nummer) {
+    primaryDisplay.textContent += nummer
+}
+
+function addPoint() {
+    if (primaryDisplay.textContent === '') {
+        primaryDisplay.textContent = "0"
+    }
+    if (primaryDisplay.textContent.includes('.')) {
+        return
+    }
+    primaryDisplay.textContent += '.'
+}
+
+function addOperation(operation) {
+    if (currentOperation !== null) {
+        evaluate()
+    }
+    firstOperand = primaryDisplay.textContent
+    currentOperation = operation
+    primaryDisplay.textContent = 0
+}
+
+/* Deletion functions */
+
+function deleteLast() {
+    primaryDisplay.textContent = primaryDisplay.textContent
+        .toString()
+        .slice(0, -1)
+}
+function reset() {
+    primaryDisplay.textContent = 0
+    secondaryDisplay.textContent = ''
+    firstOperand = ''
+    secondOperand = ''
+    currentOperation = null
+}
+
+/* Math functions */
+const multiply = (num1, num2) => num1 * num2
 const add = (num1, num2) => num1 + num2
 const substract = (num1, num2) => num1 - num2
 const divide = (num1, num2) => num1 / num2
+function round(num) {
+    return Math.round(num * 1000) / 1000
+}
+
+function evaluate() {
+    if (currentOperation === null) {
+        return
+    } else if (currentOperation === "/" && primaryDisplay.textContent === 0) {
+        console.error('Attempted division by 0')
+        alert("You can't divide by zero")
+        return
+    }
+    secondOperand = primaryDisplay.textContent
+    primaryDisplay.textContent = round(operate(currentOperation, firstOperand, secondOperand))
+}
 const operate = (operator, num1, num2) => {
+    num1 = Number(num1)
+    num2 = Number(num2)
     switch (operator) {
         case '+':
             displayResult(add(num1, num2))
@@ -22,49 +115,9 @@ const operate = (operator, num1, num2) => {
         default:
             console.error(`Operator not recognised. The current value of operand is: ${operator}`)
             break;
-                    
-    }
-}
-function setupOperand () {
-    let numberButtons = document.querySelectorAll('.operand')
-    numberButtons.forEach(element => {
-        element.addEventListener('click', (e) => {
-            /*some code that actually handles calculation
-                We already know that we're dealing with a operand, and we need to store the value of the first number (which may be an arbitrary size, the second number, and then calculate the result)
-                So we use a array, and check if we have a operator to see if we need to switch arrays
-            */
-           let value = parseInt(e.target.textContent)
-           console.log(value)
-           if (operators.length === 0) {
-            operands[0] += value
-           } else {
-            operands[1] += value
-           }
-           console.log(operands)
-        })
 
-    });
-}
-function setupOperator () {
-    let operatorButtons = document.querySelectorAll('.operator')
-    operatorButtons.forEach(element => {
-        element.addEventListener('click', (e) => {
-            let value = e.target.textContent
-            if (operators.length === 0) {
-                operators[0] = value
-                console.log(operators)
-            } else {
-                operate(operators[0], operands[0], operands[1])
-            }
-        })
-    })
-}
-const clear = () => {
-    let display = document.querySelector('.display')
-    display.textContent = DEFAULT_DISPLAY
+    }
 }
 function displayResult(result) {
     console.log(result)
 }
-setupOperand()
-setupOperator()
