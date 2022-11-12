@@ -20,7 +20,7 @@
     background-color: rgb(159, 159, 159);
     color:white;
 }
-.operator {
+.operator, .equals {
     background-color: orange;
     color:white;
 }
