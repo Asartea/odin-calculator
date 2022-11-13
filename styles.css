@@ -75,3 +75,9 @@ button {
 .button-red {
     background-color: red;
 }
+
+footer {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
