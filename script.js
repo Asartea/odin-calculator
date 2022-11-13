@@ -35,6 +35,38 @@ function setupOperators() {
         })
     })
 }
+
+// Keyboard handling
+window.addEventListener('keydown', (e) => {
+    if (e.key >= 0 && e.key <= 9) {
+        addNumber(e.key)
+        return
+    }
+    if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === 'x') {
+        addOperation(e.key)
+        return
+    }
+    if (e.key === '.') {
+        addPoint()
+        return
+    }
+    if (e.key === '=' || e.key === 'Enter') {
+        evaluate()
+        return
+    }
+    if (e.key === 'Backspace') {
+        deleteLast()
+        return
+    }
+    if (e.key === 'Delete' || e.key === 'Esc') {
+        reset()
+        return
+    }
+    if (e.key === '*') {
+        addOperation('x')
+    }
+    e.preventDefault()
+})
 setupNumbers()
 setupOperators()
 /* Dom manipulation functions */
@@ -101,8 +133,8 @@ function evaluate() {
     currentOperation = null
 }
 const operate = (operator, num1, num2) => {
-    num1 = Number(num1)
-    num2 = Number(num2)
+    num1 = Number(num1.replaceAll(' ', ''))
+    num2 = Number(num2.replaceAll(' ', ''))
     switch (operator) {
         case '+':
             return round(add(num1, num2))
