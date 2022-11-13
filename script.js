@@ -133,8 +133,8 @@ function evaluate() {
     currentOperation = null
 }
 const operate = (operator, num1, num2) => {
-    num1 = Number(num1)
-    num2 = Number(num2)
+    num1 = Number(num1.replaceAll(' ', ''))
+    num2 = Number(num2.replaceAll(' ', ''))
     switch (operator) {
         case '+':
             return round(add(num1, num2))
