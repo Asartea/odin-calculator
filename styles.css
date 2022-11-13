@@ -1,21 +1,77 @@
-.container {
-    display:grid;
-    grid-template-columns: repeat(5, 100px);
-    grid-template-rows: minmax(120px, auto) repeat(5, 80px);
-    background-color: black;
-    width: fit-content;
-    padding: 5px;
-}
-.display {
-    grid-column: 1/-1;
-}
-#equals, #zero {
-    grid-column: span 2;
-}
 .button-red {
     background-color: red;
-    color:white;
 }
-.primary-display, .secondary-display {
-    color:white
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 500px;
+    height: 74vh;
+}
+
+.calculator {
+    width: 400px;
+    padding: 20px;
+    background-color: grey;
+    border:2px solid black;
+    border-radius: 10px;
+}
+
+.display {
+    text-align: right;
+    padding: 10px 20px;
+    border:1px solid black;
+    border-radius: 5px;
+    margin:10px 10px 20px 10px;
+    background-color: lightgrey;
+}
+
+.secondary-display {
+    text-align: left;
+    min-height: 20px;
+    font-size: 15px;
+    text-overflow: '';
+    overflow: hidden;
+}
+
+.primary-display {
+    min-height: 50px;
+    font-size: 30px;
+    margin-top:10px;
+    text-overflow: '';
+    overflow: hidden;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+}
+
+.button-span-2 {
+    grid-column: span 2;
+}
+
+/* Reset default styling */
+button {
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn {
+    padding:20px;
+    border:2px solid black;
+    border-radius: 10px;
+    background-color:white;
+    font-size:20px;
+}
+
+.button-red {
+    background-color: red;
 }
